@@ -39,12 +39,12 @@ GreenAISystems combine :
 
 ## III. Architecture technique
 ### 1) Frontend 
-###    (React + D3.js)
+        (React + D3.js)
 
 ### 2) Backend API (FastAPI)
-###   - Service Learning (OpenAI GPT)
-###   - Service Carbone
-###   - Auth & Sécurité (JWT)
+      - Service Learning (OpenAI GPT)
+      - Service Carbone
+      - Auth & Sécurité (JWT)
   
 ### 3) Base de données (PostgreSQL)
 
