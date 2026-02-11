@@ -76,7 +76,7 @@ JWT_SECRET=your_jwt_secret`
 `docker-compose up --build`
 
   - API : http://localhost:8000/docs
-  - Frontend : http://localhost:3000
+  - Frontend : http://localhost:5173
 
 ## 🧪 Tests
 `docker-compose exec api pytest`
