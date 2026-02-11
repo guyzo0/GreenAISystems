@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.core.middleware.middleware import setup_middlewares
-from app.routers.api import api_router
+from app.routers.api.api import api_router
 from app.database import Base, engine
 
 app = FastAPI(title="Green AI Systems API")

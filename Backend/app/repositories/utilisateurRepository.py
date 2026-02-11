@@ -3,7 +3,7 @@ from app.models.utilisateur import Utilisateur
 from app.schemas.utilisateurSchemas import UtilisateurCreate, UtilisateurUpdate
 from app.core.security import hash_password
 
-class UserRepository:
+class UtilisateurRepository:
 
     @staticmethod
     def get_all(db: Session):
@@ -27,6 +27,7 @@ class UserRepository:
             email=payload.email,
             nom=payload.prenom,
             prenom=payload.nom,
+            date_naissance=payload.date_naissance,
             password=hash_password(payload.password)
         )
         db.add(utilisateur)
@@ -40,6 +41,8 @@ class UserRepository:
             utilisateur.email = payload.email
         if payload.prenom is not None:
             utilisateur.prenom = payload.prenom
+        if payload.date_naissance is not None:
+            utilisateur.date_naissance = payload.date_naissance
         if payload.nom is not None:
             utilisateur.nom = payload.nom
         if payload.password:

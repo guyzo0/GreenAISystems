@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, field_validator, ValidationInfo, model_validator, Field
-from datetime import datetime
+from datetime import datetime, date
 
 class UtilisateurBase(BaseModel):
     email: EmailStr
@@ -9,6 +9,7 @@ class UtilisateurBase(BaseModel):
 class UtilisateurCreate(UtilisateurBase):
     password: str
     password_confirm: str
+    date_naissance: date
 
     @field_validator("password_confirm")
     def passwords_match(cls, v, info: ValidationInfo):
@@ -23,6 +24,7 @@ class UtilisateurUpdate(BaseModel):
     nom: str | None = None
     password: str | None = None
     password_confirm: str | None = None
+    date_naissance: date | None = None
 
     @model_validator(mode="after")
     def check_password_update(self):
@@ -54,6 +56,6 @@ class UtilisateurLogin(BaseModel):
 
 class UtilisateurLoginOut(BaseModel):
     token: str
-    Utilisateur_id: int
+    utilisateur_id: int
     email: EmailStr
     expires_at: datetime

@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from app.models.utilisateur import Utilisateur
 from app.models.session_connexion import SessionConnexion
-from Backend.app.repositories.session_connexionRepository import SessionRepository
+from app.repositories.session_connexionRepository import SessionRepository
 
 TOKEN_EXPIRE_HOURS = 24  # token valide 24h
 
