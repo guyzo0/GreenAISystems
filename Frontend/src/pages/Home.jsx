@@ -3,7 +3,7 @@ import "./Home.css";
 
 import logo from "../assets/images/logo.png";
 import heroImg from "../assets/images/hero.png";
-import bgImg from "../assets/images/bg.png";
+import bgImg from "../assets/images/bg.png"; // gardé (utile si tu veux plus tard), mais background géré via CSS
 
 export default function Home() {
   const slides = useMemo(
@@ -28,7 +28,7 @@ export default function Home() {
     []
   );
 
-  const [activeDot, setActiveDot] = useState(1); // dot du milieu actif comme ta maquette
+  const [activeDot, setActiveDot] = useState(1);
 
   return (
     <div className="home">
@@ -38,21 +38,21 @@ export default function Home() {
           <div className="nav__brand">
             <img src={logo} alt="EcoLearn AI" className="nav__logo" />
           </div>
+        <nav className="nav__links">
+  <a href="#accueil" className="nav__link">
+    Accueil
+  </a>
+  <a href="#how" className="nav__link">
+    Comment ça marche
+  </a>
+  <a href="#about" className="nav__link">
+    À propos
+  </a>
+  <a href="#contact" className="nav__link">
+    Contact
+  </a>
+</nav>
 
-          <nav className="nav__links">
-            <a href="#accueil" className="nav__link">
-              Accueil
-            </a>
-            <a href="#fonctionnalites" className="nav__link">
-              Fonctionnalités
-            </a>
-            <a href="#impact" className="nav__link">
-              Impact écologique
-            </a>
-            <a href="#contact" className="nav__link">
-              Contact
-            </a>
-          </nav>
 
           <div className="nav__actions">
             <button className="btn btn--ghost">SE CONNECTER</button>
@@ -63,14 +63,12 @@ export default function Home() {
 
       {/* HERO */}
       <main id="accueil" className="hero">
-        <div className="hero__bg" style={{ backgroundImage: `url(${bgImg})` }} />
-
         <div className="hero__container">
           <div className="hero__top">
             <section className="hero__left">
               <h1 className="hero__title">
-                Votre <span className="u-bold">savoir</span>, un impact {" "}
-                <span className="u-bold">positif</span> sur la {" "}
+                Votre <span className="u-bold">savoir</span>, un impact{" "}
+                <span className="u-bold">positif</span> sur la{" "}
                 <span className="u-bold">planète</span>.
               </h1>
 
@@ -93,40 +91,35 @@ export default function Home() {
               />
             </section>
           </div>
-
-          {/* Cards below the hero top */}
-          <section id="fonctionnalites" className="cards">
-            <div className="cards__grid">
-              {slides.map((s, idx) => (
-                <article
-                  key={s.title}
-                  className={`card ${s.featured ? "card--featured" : ""}`}
-                >
-                  <div className="card__icon">{s.icon}</div>
-                  <h3 className="card__title">{s.title}</h3>
-                  <p className="card__text">{s.text}</p>
-                </article>
-              ))}
-            </div>
-
-            <div className="dots" aria-label="carousel dots">
-              {[0, 1, 2].map((d) => (
-                <button
-                  key={d}
-                  className={`dot ${activeDot === d ? "dot--active" : ""}`}
-                  onClick={() => setActiveDot(d)}
-                  aria-label={`slide ${d + 1}`}
-                />
-              ))}
-            </div>
-          </section>
         </div>
       </main>
+
+      {/* FEATURES */}
+      <section className="features" id="fonctionnalites">
+        <div className="features__container">
+          <div className="cards__grid">
+            {slides.map((s) => (
+              <article
+                key={s.title}
+                className={`card ${s.featured ? "card--featured" : ""}`}
+              >
+                <div className="card__icon">{s.icon}</div>
+                <h3 className="card__title">{s.title}</h3>
+                <p className="card__text">{s.text}</p>
+              </article>
+            ))}
+          </div>
+
+          
+        </div>
+      </section>
 
       {/* FOOTER */}
       <footer className="site-footer">
         <div className="site-footer__inner">
-          <p>&copy; {new Date().getFullYear()} EcoLearn AI — Tous droits réservés.</p>
+          <p>
+            &copy; {new Date().getFullYear()} EcoLearn AI — Tous droits réservés.
+          </p>
           <nav className="site-footer__links">
             <a href="#contact">Contact</a>
             <a href="#privacy">Confidentialité</a>
