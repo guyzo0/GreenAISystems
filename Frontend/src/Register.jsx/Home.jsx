@@ -1,9 +1,11 @@
-import React, { useMemo } from "react";
-import { Link } from "react-router-dom";
+import React, { useMemo, useState } from "react";
 import "./Home.css";
 
 import logo from "../assets/images/logo.png";
 import heroImg from "../assets/images/hero.png";
+import { Link } from "react-router-dom";
+
+import bgImg from "../assets/images/bg.png"; // gardé (utile si tu veux plus tard), mais background géré via CSS
 
 export default function Home() {
   const slides = useMemo(
@@ -28,40 +30,44 @@ export default function Home() {
     []
   );
 
+  const [activeDot, setActiveDot] = useState(1);
+
   return (
     <div className="home">
       {/* NAVBAR */}
       <header className="nav">
-        <div className="nav__container">
-          <div className="nav__brand">
-            <img src={logo} alt="EcoLearn AI" className="nav__logo" />
-          </div>
+  <div className="nav__container">
+    <div className="nav__brand">
+      <img src={logo} alt="EcoLearn AI" className="nav__logo" />
+    </div>
 
-          <nav className="nav__links">
-            <a href="#accueil" className="nav__link">
-              Accueil
-            </a>
-            <a href="#how" className="nav__link">
-              Comment ça marche
-            </a>
-            <a href="#about" className="nav__link">
-              À propos
-            </a>
-            <a href="#contact" className="nav__link">
-              Contact
-            </a>
-          </nav>
+    <nav className="nav__links">
+      <a href="#accueil" className="nav__link">
+        Accueil
+      </a>
+      <a href="#how" className="nav__link">
+        Comment ça marche
+      </a>
+      <a href="#about" className="nav__link">
+        À propos
+      </a>
+      <a href="#contact" className="nav__link">
+        Contact
+      </a>
+    </nav>
 
-          <div className="nav__actions">
-            <Link to="/login" className="btn btn--ghost">
-              SE CONNECTER
-            </Link>
-            <Link to="/register" className="btn btn--primary">
-              INSCRIPTION
-            </Link>
-          </div>
-        </div>
-      </header>
+    <div className="nav__actions">
+      <Link to="/login" className="btn btn--ghost">
+        SE CONNECTER
+      </Link>
+
+      <Link to="/register" className="btn btn--primary">
+        INSCRIPTION
+      </Link>
+    </div>
+  </div>
+</header>
+
 
       {/* HERO */}
       <main id="accueil" className="hero">
@@ -80,9 +86,7 @@ export default function Home() {
               </p>
 
               <div className="hero__cta">
-                <Link to="/register" className="btn btn--primary btn--lg">
-                  Commencer
-                </Link>
+                <button className="btn btn--primary btn--lg">Commencer</button>
               </div>
             </section>
 
@@ -99,7 +103,7 @@ export default function Home() {
       </main>
 
       {/* FEATURES */}
-      <section className="features" id="how">
+      <section className="features" id="fonctionnalites">
         <div className="features__container">
           <div className="cards__grid">
             {slides.map((s) => (
@@ -113,12 +117,10 @@ export default function Home() {
               </article>
             ))}
           </div>
+
+          
         </div>
       </section>
-
-      {/* ABOUT + CONTACT placeholders (anchors) */}
-      <section id="about" style={{ height: 10 }} />
-      <section id="contact" style={{ height: 10 }} />
 
       {/* FOOTER */}
       <footer className="site-footer">
@@ -136,3 +138,4 @@ export default function Home() {
     </div>
   );
 }
+
