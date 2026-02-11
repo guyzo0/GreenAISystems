@@ -1,0 +1,287 @@
+/* ===========================
+   AUTH – Login / Register
+   même style que Home
+=========================== */
+
+:root {
+  --cta: #013759;
+  --cta-hover: #025b87;
+  --cta-active: #01263c;
+
+  --green: #43a047;
+  --pink: #d63384;
+
+  --text: #0f172a;
+  --muted: #6b7785;
+
+  --border: rgba(255, 255, 255, 0.45);
+
+  --shadow: 0 18px 45px rgba(1, 55, 89, 0.18);
+}
+
+/* ===========================
+   FULLSCREEN BACKGROUND
+=========================== */
+
+.auth {
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  place-items: center;
+
+  padding: 100px 20px 40px;
+
+  background: transparent;
+}
+
+/* ===========================
+   GLASS CARD
+=========================== */
+
+.auth__card {
+  width: 100%;
+  max-width: 420px;
+
+  border-radius: 22px;
+  padding: 34px 30px;
+
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+
+  border: 1px solid var(--border);
+
+  box-shadow: var(--shadow);
+}
+
+/* ===========================
+   BRAND
+=========================== */
+
+.auth__brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.auth__logo {
+  height: 44px;
+}
+
+.auth__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.auth__subtitle {
+  margin: 2px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ===========================
+   FORM
+=========================== */
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* inputs */
+
+.field input {
+  border-radius: 12px;
+  padding: 11px 14px;
+
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  background: rgba(255, 255, 255, 0.8);
+
+  font-size: 13px;
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+.field input:focus {
+  border-color: var(--cta);
+  box-shadow: 0 0 0 2px rgba(1, 55, 89, 0.15);
+}
+
+/* ===========================
+   PASSWORD
+=========================== */
+
+.pwd {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.pwd input {
+  flex: 1;
+  padding-right: 88px;
+}
+
+.pwd__toggle {
+  position: absolute;
+  right: 8px;
+
+  background: transparent;
+  border: none;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  color: var(--cta);
+  cursor: pointer;
+}
+
+/* ===========================
+   ERROR
+=========================== */
+
+.error {
+  font-size: 11px;
+  color: #dc2626;
+}
+
+/* ===========================
+   ROW
+=========================== */
+
+.auth__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+/* checkbox */
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.check input {
+  accent-color: var(--cta);
+}
+
+/* ===========================
+   LINKS
+=========================== */
+
+.auth__link {
+  color: var(--cta);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.auth__link:hover {
+  text-decoration: underline;
+}
+
+/* ===========================
+   BUTTONS
+=========================== */
+
+.btnAuth {
+  border-radius: 12px;
+  padding: 12px 16px;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  cursor: pointer;
+  border: none;
+
+  transition: all 0.2s ease;
+}
+
+.btnAuth--primary {
+  background: var(--cta);
+  color: white;
+
+  box-shadow: 0 10px 24px rgba(1, 55, 89, 0.28);
+}
+
+.btnAuth--primary:hover {
+  background: var(--cta-hover);
+  transform: translateY(-1px);
+}
+
+.btnAuth--ghost {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(1, 55, 89, 0.25);
+  color: var(--cta);
+
+  backdrop-filter: blur(6px);
+}
+
+.btnAuth--ghost:hover {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+/* ===========================
+   HINT
+=========================== */
+
+.auth__hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media (max-width: 520px) {
+  .auth__card {
+    padding: 26px 22px;
+  }
+
+  .auth__title {
+    font-size: 20px;
+  }
+}
+
+/* ✅ rendre le texte visible dans les champs */
+.field input {
+  color: #0f172a;              /* texte tapé */
+  caret-color: #0f172a;        /* curseur */
+}
+
+/* ✅ couleur du placeholder */
+.field input::placeholder {
+  color: rgba(15, 23, 42, 0.45);
+}
+
+/* ✅ si le navigateur applique des styles auto */
+.field input:-webkit-autofill {
+  -webkit-text-fill-color: #0f172a;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.pwd input {
+  color: #0f172a;
+  caret-color: #0f172a;
+}
