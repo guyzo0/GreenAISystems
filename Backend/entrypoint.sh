@@ -1,37 +1,21 @@
 #!/bin/bash
-set -euo pipefail
+set -e
 
-ENV="${ENV}"
-echo "ENV=$ENV"
+echo "Waiting for PostgreSQL..."
 
-DB_HOST="${DB_HOST:-postgres}"
-DB_PORT="${DB_PORT:-5432}"
-DB_TIMEOUT="${DB_TIMEOUT:-60}"
-
-echo "Attente PostgreSQL sur $DB_HOST:$DB_PORT..."
-
-for i in $(seq 1 "$DB_TIMEOUT"); do
-    if nc -z "$DB_HOST" "$DB_PORT"; then
-        echo "PostgreSQL prêt ✅"
-        break
-    fi
-    sleep 1
+until nc -z postgres 5432; do
+  sleep 1
 done
 
-if ! nc -z "$DB_HOST" "$DB_PORT" >/dev/null 2>&1; then
-    echo "⛔ PostgreSQL non disponible après $DB_TIMEOUT secondes"
-    exit 1
-fi
+echo "PostgreSQL started"
 
-echo "Lancement des migrations Alembic..."
-#alembic upgrade head
+echo "Running migrations..."
+alembic upgrade head
 
-APP_MODULE="${APP_MODULE:-app.main:app}"
-APP_HOST="${APP_HOST:-0.0.0.0}"
-APP_PORT="${APP_PORT:-8000}"
+echo "Starting API..."
 
 if [ "$ENV" = "prod" ]; then
-    exec uvicorn "$APP_MODULE" --host "$APP_HOST" --port "$APP_PORT" --workers "${WORKERS:-4}"
+    exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
 else
-    exec uvicorn "$APP_MODULE" --host "$APP_HOST" --port "$APP_PORT" --reload
+    exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 fi
