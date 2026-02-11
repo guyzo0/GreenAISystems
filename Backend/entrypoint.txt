@@ -1,0 +1,39 @@
+#!/bin/bash
+set -euo pipefail
+
+ENV="${ENV}"
+echo "ENV=$ENV"
+
+DB_HOST="${DB_HOST:-postgres}"
+DB_PORT="${DB_PORT:-5432}"
+DB_USER="${POSTGRES_USER:?POSTGRES_USER manquant}"
+DB_NAME="${POSTGRES_DB:?POSTGRES_DB manquant}"
+DB_TIMEOUT="${DB_TIMEOUT:-60}"
+
+echo "Attente PostgreSQL sur $DB_HOST:$DB_PORT..."
+
+for i in $(seq 1 "$DB_TIMEOUT"); do
+    if pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" >/dev/null 2>&1; then
+        echo "PostgreSQL prêt ✅"
+        break
+    fi
+    sleep 1
+done
+
+if ! pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER" -d "$DB_NAME" >/dev/null 2>&1; then
+    echo "⛔ PostgreSQL non disponible après $DB_TIMEOUT secondes"
+    exit 1
+fi
+
+echo "Lancement des migrations Alembic..."
+alembic upgrade head
+
+APP_MODULE="${APP_MODULE:-main:app}"
+APP_HOST="${APP_HOST:-0.0.0.0}"
+APP_PORT="${APP_PORT:-8000}"
+
+if [ "$ENV" = "prod" ]; then
+    exec uvicorn "$APP_MODULE" --host "$APP_HOST" --port "$APP_PORT" --workers "${WORKERS:-4}"
+else
+    exec uvicorn "$APP_MODULE" --host "$APP_HOST" --port "$APP_PORT" --reload
+fi
