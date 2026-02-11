@@ -1,5 +1,4 @@
 from sqlalchemy.orm import sessionmaker, declarative_base
-from dotenv import load_dotenv
 import os
 from sqlalchemy import Column, Integer, DateTime, String, create_engine
 from datetime import datetime
@@ -17,10 +16,8 @@ class TimestampMixin:
 class UUIDMixin:
     token = Column(String(64), default=lambda: uuid.uuid4().hex, unique=True)
 
-load_dotenv()
-
 # DATABASE_URL = "postgresql://postgres:admin@localhost/ecolearn_ai"
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.environ["DATABASE_URL"]
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
