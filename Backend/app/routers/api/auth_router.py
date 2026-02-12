@@ -1,4 +1,3 @@
-# app/api/v1/routers/auth_router.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.schemas.utilisateurSchemas import UtilisateurLoginOut, UtilisateurLogin

@@ -15,4 +15,5 @@ COPY . .
 # Copier l'entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+RUN python -m app.scripts.seed_role
 ENTRYPOINT ["/entrypoint.sh"]
