@@ -1,0 +1,271 @@
+/* Reprend l'esprit glass + couleurs de Home */
+:root {
+  --cta: #013759;
+  --cta-hover: #025b87;
+  --cta-active: #01263c;
+
+  --text: #1f2933;
+  --muted: #6b7785;
+
+  --shadow: 0 18px 45px rgba(1, 55, 89, 0.12);
+  --shadow-soft: 0 10px 25px rgba(1, 55, 89, 0.1);
+}
+
+.settings {
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 88px;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.nav__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.nav__logo {
+  height: 34px;
+}
+
+.nav__links {
+  display: flex;
+  gap: 14px;
+}
+
+.nav__linkBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+.nav__linkBtn:hover {
+  color: var(--cta);
+  background: rgba(1, 55, 89, 0.06);
+}
+
+.nav__linkBtn--active {
+  color: var(--cta);
+  background: rgba(1, 55, 89, 0.08);
+}
+
+.nav__actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Boutons (same vibe Home) */
+.btn {
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn--primary {
+  background: var(--cta);
+  color: white;
+  box-shadow: 0 10px 22px rgba(1, 55, 89, 0.25);
+}
+
+.btn--primary:hover {
+  background: var(--cta-hover);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(1, 55, 89, 0.28);
+  color: var(--cta);
+  backdrop-filter: blur(8px);
+}
+
+.btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* Menu profil */
+.profileMenu {
+  position: absolute;
+  top: 46px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 160px;
+}
+
+/* Main card */
+.settings__main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 28px 22px 60px;
+}
+
+.settings__card {
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow);
+  padding: 26px;
+}
+
+.settings__title {
+  margin: 0 0 6px;
+  font-size: 40px;
+  color: #0f172a;
+  font-weight: 800;
+}
+
+.settings__subtitle {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.settings__sectionTitle {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.settings__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field span {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #0f172a;
+}
+
+.field input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  outline: none;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.field input:focus {
+  border-color: rgba(1, 55, 89, 0.45);
+  box-shadow: 0 0 0 4px rgba(1, 55, 89, 0.10);
+}
+
+.sep {
+  border: none;
+  height: 1px;
+  background: rgba(15, 23, 42, 0.12);
+  margin: 10px 0;
+}
+
+.settings__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.btnSave {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: var(--cta);
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(1, 55, 89, 0.25);
+}
+
+.btnSave:hover {
+  background: var(--cta-hover);
+}
+
+.btnSave:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btnBack {
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(1, 55, 89, 0.28);
+  color: var(--cta);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.btnBack:hover {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+/* Messages */
+.msg {
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.msg--info {
+  background: rgba(1, 55, 89, 0.08);
+  color: #013759;
+}
+
+.msg--error {
+  background: rgba(214, 51, 132, 0.10);
+  border-color: rgba(214, 51, 132, 0.25);
+  color: #a61b5a;
+}
+
+.msg--success {
+  background: rgba(67, 160, 71, 0.12);
+  border-color: rgba(67, 160, 71, 0.25);
+  color: #2e7d32;
+}
+
+@media (max-width: 980px) {
+  .nav__links {
+    display: none;
+  }
+  .settings__title {
+    font-size: 30px;
+  }
+  .settings__actions {
+    flex-direction: column;
+  }
+}
