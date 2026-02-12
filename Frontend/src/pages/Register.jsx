@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import logo from "../assets/images/logo.png";
 
 export default function Register() {
+  const navigate = useNavigate();
+  const redirectTimer = useRef(null);
+
   const [form, setForm] = useState({
     prenom: "",
     nom: "",
@@ -16,6 +19,8 @@ export default function Register() {
 
   const [errors, setErrors] = useState({});
   const [showPwd, setShowPwd] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const onChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -53,43 +58,53 @@ export default function Register() {
   };
 
   const onSubmit = async (ev) => {
-    ev.preventDefault();
-    if (!validate()) return;
+  ev.preventDefault();
+  if (!validate()) return;
 
-    try {
-      const res = await fetch("http://localhost:8000/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          prenom: form.prenom,
-          nom: form.nom,
-          date_naissance: form.date_naissance, // format YYYY-MM-DD
-          email: form.email,
-          password: form.password, // backend le hash
-        }),
-      });
+  setLoading(true);
 
-      const data = await res.json();
+  try {
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-      if (!res.ok) {
-        alert(data.message || "Erreur d’inscription");
-        return;
-      }
+    const res = await fetch(`${API_URL}/api/users/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        prenom: form.prenom,
+        nom: form.nom,
+        date_naissance: form.date_naissance,
+        email: form.email,
+        password: form.password,
+        password_confirm: form.confirmPassword,
+      }),
+    });
 
-      // Si le backend renvoie directement un token
-      if (data.access_token) {
-        localStorage.setItem("token", data.access_token);
-        window.location.href = "/dashboard";
-        return;
-      }
+    const data = await res.json();
 
-      // Sinon => on redirige vers login
-      alert("Inscription réussie. Vous pouvez vous connecter.");
-      window.location.href = "/login";
-    } catch (err) {
-      console.error(err);
-      alert("Backend inaccessible.");
+    if (!res.ok) {
+      alert(data.detail || "Erreur d’inscription");
+      return;
     }
+
+    setSuccessMessage(
+      `🎉 Bienvenue ${form.prenom} ! Votre compte EcoLearn AI est prêt.
+Redirection vers la page de connexion...`
+    );
+
+    setTimeout(() => navigate("/login"), 2500);
+
+  } catch (err) {
+    console.error(err);
+    alert("Backend inaccessible.");
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+  const closePopup = () => {
+    setSuccessMessage("");
+    if (redirectTimer.current) clearTimeout(redirectTimer.current);
   };
 
   return (
@@ -183,9 +198,7 @@ export default function Register() {
                 {showPwd ? "Masquer" : "Afficher"}
               </button>
             </div>
-            {errors.password && (
-              <small className="error">{errors.password}</small>
-            )}
+            {errors.password && <small className="error">{errors.password}</small>}
           </label>
 
           {/* CONFIRM PASSWORD */}
@@ -226,8 +239,12 @@ export default function Register() {
           </label>
           {errors.agree && <small className="error">{errors.agree}</small>}
 
-          <button className="btnAuth btnAuth--primary" type="submit">
-            Créer mon compte
+          <button
+            className="btnAuth btnAuth--primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Création..." : "Créer mon compte"}
           </button>
 
           <p className="auth__hint">
@@ -241,7 +258,48 @@ export default function Register() {
             Retour à l’accueil
           </Link>
         </form>
+        {successMessage && (
+  <div className="success-inline">
+    {successMessage}
+  </div>
+)}
+
       </div>
+
+      {/* ✅ SUCCESS POPUP */}
+      {successMessage && (
+        <div className="success-popup" onClick={closePopup}>
+          <div
+            className="success-popup__card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3>Compte créé ✅</h3>
+            <p style={{ whiteSpace: "pre-line" }}>{successMessage}</p>
+
+            <div className="success-popup__actions">
+              <button
+                type="button"
+                className="btnAuth btnAuth--primary"
+                onClick={() => navigate("/login")}
+              >
+                Se connecter maintenant
+              </button>
+
+              <button
+                type="button"
+                className="btnAuth btnAuth--ghost"
+                onClick={closePopup}
+              >
+                Fermer
+              </button>
+            </div>
+
+            <small className="success-popup__hint">
+              Redirection automatique dans quelques secondes...
+            </small>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

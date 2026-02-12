@@ -285,3 +285,107 @@
   color: #0f172a;
   caret-color: #0f172a;
 }
+
+/* =========================
+   SUCCESS POPUP (Register)
+========================= */
+
+.success-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+
+  padding: 18px;
+}
+
+.success-popup__card {
+  width: min(520px, 92vw);
+  border-radius: 18px;
+  padding: 18px 16px;
+
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 45px rgba(1, 55, 89, 0.22);
+}
+
+.success-popup__card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.success-popup__card p {
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.success-popup__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+
+.success-popup__hint {
+  display: block;
+  margin-top: 12px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* SUCCESS MESSAGE INLINE */
+
+.success-inline {
+  margin-bottom: 16px;
+  padding: 14px;
+  border-radius: 12px;
+
+  background: rgba(67, 160, 71, 0.12);
+  border: 1px solid rgba(67, 160, 71, 0.35);
+
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1b4332;
+  font-weight: 500;
+}
+
+/* SUCCESS/ERROR INLINE (Login/Register) */
+
+.success-inline {
+  margin: 0 0 16px 0;
+  padding: 14px;
+  border-radius: 12px;
+
+  background: rgba(67, 160, 71, 0.12);
+  border: 1px solid rgba(67, 160, 71, 0.35);
+
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1b4332;
+  font-weight: 600;
+  white-space: pre-line; /* pour garder les sauts de ligne */
+}
+
+.error-inline {
+  margin: 0 0 16px 0;
+  padding: 14px;
+  border-radius: 12px;
+
+  background: rgba(214, 51, 132, 0.10);
+  border: 1px solid rgba(214, 51, 132, 0.35);
+
+  font-size: 14px;
+  line-height: 1.5;
+  color: #7a1f4b;
+  font-weight: 600;
+}
