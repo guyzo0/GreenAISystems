@@ -81,7 +81,7 @@ export default function Home() {
 
               <div className="hero__cta">
                 <Link to="/register" className="btn btn--primary btn--lg">
-                  Commencer
+                  Inscrire
                 </Link>
               </div>
             </section>

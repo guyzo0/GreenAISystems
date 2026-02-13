@@ -18,7 +18,7 @@ GreenAISystems combine :
 ### 1) Apprentissage par IA 
   - Génération de parcours pédagogiques personnalisés
   - Adaptation du contenu selon le niveau et la progression
-  - API FastAPI intégrant OpenAI GPT
+  - API FastAPI intégrant Google Gemini API
 
 ### 2) Impact environnemental
   - Calcul automatique de l’empreinte carbone par session
@@ -42,7 +42,7 @@ GreenAISystems combine :
         (React + D3.js)
 
 ### 2) Backend API (FastAPI)
-      - Service Learning (OpenAI GPT)
+      - Service Learning (Google Gemini AI)
       - Service Carbone
       - Auth & Sécurité (JWT)
   
@@ -51,7 +51,7 @@ GreenAISystems combine :
 ## IV. Stack technique
 ### Domaine	                      Technologies
 Backend	                          FastAPI, Python
-IA	                              OpenAI GPT
+IA	                              Google Gemini Pro
 Frontend	                        React, D3.js
 Base de données	                  PostgreSQL
 DevOps	                          Docker, GitHub Actions
@@ -63,14 +63,15 @@ Qualité	                          Pytest, SonarCloud
   - Docker & Docker Compose
   - Python 3.10+
   - Node.js 18+
-  - Compte OpenAI (clé API)
+  - Compte Google AI (clé API Gemini)
 
 ### 2) Variables d’environnement
-Créer un fichier .env à la racine :
+Créer un fichier .env à la racine (voir .env.example) :
 
-`OPENAI_API_KEY=your_openai_api_key
-DATABASE_URL=postgresql://user:password@db:5432/ecolearn
-JWT_SECRET=your_jwt_secret`
+`GEMINI_API_KEY=your_gemini_api_key
+POSTGRES_DB=greenaisystem_db
+POSTGRES_PASSWORD=GR€€N
+POSTGRES_USER=greenadmin`
 
 ### 3) Lancer le projet ▶️
 `docker-compose up --build`

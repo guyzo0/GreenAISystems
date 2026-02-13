@@ -12,6 +12,9 @@ echo "PostgreSQL started"
 echo "Running migrations..."
 alembic upgrade head
 
+echo "Seeding roles..."
+python -m app.scripts.seed_role
+
 echo "Starting API..."
 
 if [ "$ENV" = "prod" ]; then

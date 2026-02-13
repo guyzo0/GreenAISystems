@@ -27,6 +27,7 @@ services:
     environment:
       ENV: ${ENV:-prod}
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
     depends_on:
       - postgres
     networks:

@@ -1,41 +1,56 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Auth.css";
 import logo from "../assets/images/logo.png";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [showPwd, setShowPwd] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // ✅ messages inline (comme Register)
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const onChange = (e) => {
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
     setErrors((p) => ({ ...p, [e.target.name]: "" }));
+
+    // on efface les messages quand l'utilisateur retape
+    setErrorMessage("");
+    setSuccessMessage("");
   };
 
   const validate = () => {
     const e = {};
+
     if (!form.email.trim()) e.email = "Email obligatoire.";
     else if (!/^\S+@\S+\.\S+$/.test(form.email)) e.email = "Email invalide.";
 
     if (!form.password) e.password = "Mot de passe obligatoire.";
-    else if (form.password.length < 6) e.password = "Minimum 6 caractères.";
+    else if (form.password.length < 3) e.password = "Minimum 3 caractères.";
 
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  // ✅ FETCH LOGIN
   const onSubmit = async (ev) => {
     ev.preventDefault();
     if (!validate()) return;
 
+    setLoading(true);
+    setErrorMessage("");
+    setSuccessMessage("");
+
     try {
-      const res = await fetch("http://localhost:8000/api/auth/login", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: form.email,
           password: form.password,
@@ -45,20 +60,27 @@ export default function Login() {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(data.message || "Erreur de connexion");
+        setErrorMessage(data.detail || "Email ou mot de passe incorrect.");
         return;
       }
 
-      console.log("TOKEN:", data.access_token);
+      // ✅ sauvegarde session
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user_id", data.utilisateur_id);
+      localStorage.setItem("email", data.email);
 
-      // stocker token
-      localStorage.setItem("token", data.access_token);
+      // ✅ message personnalisé + redirection
+      setSuccessMessage(
+        `✅ Bon retour ${data.email} ! Connexion réussie.
+Redirection vers votre dashboard...`
+      );
 
-      // redirect (à adapter si tu as une autre route)
-      window.location.href = "/dashboard";
+      setTimeout(() => navigate("/dashboard"), 1500);
     } catch (err) {
       console.error(err);
-      alert("Backend inaccessible.");
+      setErrorMessage("Backend inaccessible. Vérifiez que l’API est lancée.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -72,6 +94,10 @@ export default function Login() {
             <p className="auth__subtitle">Accédez à votre espace EcoLearn AI.</p>
           </div>
         </div>
+
+        {/* ✅ MESSAGE SUCCESS / ERROR inline */}
+        {successMessage && <div className="success-inline">{successMessage}</div>}
+        {errorMessage && <div className="error-inline">{errorMessage}</div>}
 
         <form className="auth__form" onSubmit={onSubmit} noValidate>
           <label className="field">
@@ -104,24 +130,15 @@ export default function Login() {
                 {showPwd ? "Masquer" : "Afficher"}
               </button>
             </div>
-            {errors.password && (
-              <small className="error">{errors.password}</small>
-            )}
+            {errors.password && <small className="error">{errors.password}</small>}
           </label>
 
-          <div className="auth__row">
-            <label className="check">
-              <input type="checkbox" />
-              <span>Se souvenir de moi</span>
-            </label>
-
-            <a className="auth__link" href="#">
-              Mot de passe oublié ?
-            </a>
-          </div>
-
-          <button className="btnAuth btnAuth--primary" type="submit">
-            Se connecter
+          <button
+            className="btnAuth btnAuth--primary"
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Connexion..." : "Se connecter"}
           </button>
 
           <p className="auth__hint">

@@ -42,7 +42,7 @@ class UtilisateurService:
         # Vérification firstname+lastname seulement si modifiés
         if payload.prenom or payload.nom:
             new_firstname = payload.prenom or user.prenom
-            new_lastname = payload.lastname or user.nom
+            new_lastname = payload.nom or user.nom
             if UtilisateurRepository.exists_by_fullname_update(db, user_id, new_firstname, new_lastname):
                 raise HTTPException(400, "Another user already has this firstname + lastname")
 
