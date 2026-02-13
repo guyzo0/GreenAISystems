@@ -25,7 +25,7 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r Backend/requirements.txt
-      - run: pytest backend
+      - run: pytest Backend
         env:
           DATABASE_URL: postgresql://test:test@localhost:5432/test_db
 
