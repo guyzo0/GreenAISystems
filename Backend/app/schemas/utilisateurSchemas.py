@@ -44,6 +44,7 @@ class UtilisateurUpdate(BaseModel):
 
 class UtilisateurOut(UtilisateurBase):
     id: int
+    date_naissance: date | None = None
 
     class Config:
         from_attributes = True

@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
+import History from "./pages/History";
 
 export default function App() {
   return (
@@ -14,7 +15,9 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </BrowserRouter>
+
   );
 }

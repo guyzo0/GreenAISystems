@@ -24,7 +24,7 @@ if ! nc -z "$DB_HOST" "$DB_PORT" >/dev/null 2>&1; then
 fi
 
 echo "Lancement des migrations Alembic..."
-#alembic upgrade head
+alembic upgrade head
 
 APP_MODULE="${APP_MODULE:-app.main:app}"
 APP_HOST="${APP_HOST:-0.0.0.0}"
